@@ -30,4 +30,6 @@ jobs:
         run: git pull --rebase origin mirror-3
 
       - name: Push changes to mirror-3 branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Using the default token
         run: git push origin mirror-3
