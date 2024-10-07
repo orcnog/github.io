@@ -24,7 +24,9 @@ jobs:
         run: git fetch https://github.com/orcnog/5etools-mirror-3.git main
 
       - name: Reset to 5etools-mirror-3/main
-        run: git reset --hard FETCH_HEAD
+        run: |
+          git reset --hard FETCH_HEAD
+          git restore --staged .github/workflows/
 
       - name: Pull latest changes from remote branch
         run: git pull --rebase origin mirror-3
