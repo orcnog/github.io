@@ -9,21 +9,21 @@ jobs:
   update-mirror-3:
     runs-on: ubuntu-latest
     steps:
+      - name: Set committer identity
+        run: |
+          git config --global user.email "orcnog@gmail.com" # Use my email
+          git config --global user.name "orcnog" # Use my name
+
       - name: Checkout orcnog.github.io repo
         uses: actions/checkout@v3
         with:
           repository: orcnog/orcnog.github.io # Update to your GitHub username
           ref: mirror-3
 
-      - name: Set committer identity
-        run: |
-          git config --global user.email "orcnog@gmail.com" # Use my email
-          git config --global user.name "orcnog" # Use my name
-
-      - name: Fetch mirror-3 repository
+      - name: Fetch 5etools-mirror-3 repository
         run: git fetch https://github.com/orcnog/5etools-mirror-3.git main
 
-      - name: Reset to mirror-3/main
+      - name: Reset to 5etools-mirror-3/main
         run: git reset --hard FETCH_HEAD
 
       - name: Push changes to mirror-3 branch
