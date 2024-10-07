@@ -19,6 +19,7 @@ jobs:
         with:
           repository: orcnog/orcnog.github.io
           ref: mirror-3
+          fetch-depth: 0  # Ensures full history is fetched
 
       - name: Fetch mirror-3 repository
         run: git fetch https://github.com/orcnog/5etools-mirror-3.git main
@@ -26,10 +27,7 @@ jobs:
       - name: Reset to 5etools-mirror-3/main
         run: git reset --hard FETCH_HEAD
 
-      - name: Pull latest changes from mirror-3 branch in orcnog.github.io
-        run: git pull --rebase origin mirror-3
-
-      - name: Push changes to mirror-3 branch
+      - name: Force push changes to mirror-3 branch
         env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOWS_PAT }} # Using the PAT for authentication
-        run: git push origin mirror-3
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Using the PAT for authentication
+        run: git push origin mirror-3 --force
