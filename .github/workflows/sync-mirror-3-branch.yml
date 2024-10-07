@@ -29,5 +29,5 @@ jobs:
 
       - name: Force push changes to mirror-3 branch
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Using the PAT for authentication
+          GITHUB_TOKEN: ${{ secrets.WORKFLOWS_PAT }} # Using the PAT for authentication
         run: git push origin mirror-3 --force
