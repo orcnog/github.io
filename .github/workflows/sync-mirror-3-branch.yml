@@ -17,13 +17,13 @@ jobs:
       - name: Checkout orcnog.github.io repo
         uses: actions/checkout@v3
         with:
-          repository: orcnog/orcnog.github.io # Update to your GitHub username
+          repository: orcnog/orcnog.github.io
           ref: mirror-3
 
       - name: Fetch mirror-3 repository
         run: git fetch https://github.com/orcnog/5etools-mirror-3.git main
 
-      - name: Reset to mirror-3/main
+      - name: Reset to 5etools-mirror-3/main
         run: git reset --hard FETCH_HEAD
 
       - name: Pull latest changes from remote branch
