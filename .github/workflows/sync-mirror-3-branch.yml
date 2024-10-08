@@ -1,33 +1,33 @@
-name: Sync mirror-3 branch
+name: Sync Fork
 
 on:
   schedule:
-    - cron: '0 1 * * 0' # Runs weekly, 1 hour after the first workflow
+    - cron: '0 0 * * 0' # Runs every Sunday at midnight (UTC)
   workflow_dispatch: # Allows manual trigger
 
 jobs:
-  update-mirror-3:
+  sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Set committer identity
-        run: |
-          git config --global user.email "orcnog@gmail.com" # Your email
-          git config --global user.name "orcnog" # Your name
-
-      - name: Checkout orcnog.github.io repo
+      - name: Checkout 5etools-mirror-3 repo
         uses: actions/checkout@v3
         with:
-          repository: orcnog/orcnog.github.io
-          ref: mirror-3
-          fetch-depth: 0  # Ensures full history is fetched
+          repository: orcnog/5etools-mirror-3
+          ref: 5etools-mirror-3
 
-      - name: Fetch mirror-3 repository
-        run: git fetch https://github.com/orcnog/5etools-mirror-3.git main
+      - name: Add upstream
+        run: git remote add upstream https://github.com/5etools-mirror-3/5etools-2014-src.git # The original repo URL (the fork source)
 
-      - name: Reset to 5etools-mirror-3/main
-        run: git reset --hard FETCH_HEAD
+      - name: Fetch upstream
+        run: git fetch upstream
 
-      - name: Force push changes to mirror-3 branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOWS_PAT }} # Using the PAT for authentication
-        run: git push origin mirror-3 --force
+      - name: Set committer identity
+        run: |
+          git config --global user.email "orcnog@gmail.com" # Use my email
+          git config --global user.name "orcnog" # Use my name
+
+      - name: Merge upstream changes
+        run: git merge upstream/main --allow-unrelated-histories
+
+      - name: Push changes
+        run: git push origin 5etools-mirror-3
